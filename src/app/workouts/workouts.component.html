@@ -1,1 +1,32 @@
-<p>workouts works!</p>
+<h2>WorkOuts</h2>
+<mat-card>
+    <mat-card-title>Active</mat-card-title>
+    <mat-card *ngFor="let workOut of Object.values(activeWorkOuts)">
+
+        <mat-card-subtitle>{{workOut.title}}</mat-card-subtitle>
+        <mat-selection-list #workOuts (selectionChange)="slectedChange($event, workOut)">
+            <mat-list-option *ngFor="let excercise of Object.values(workOut.exersices)" [value]="excercise.id"
+                [selected]="excercise.status">
+                {{excercise.title}}
+            </mat-list-option>
+        </mat-selection-list>
+
+        <p>
+            Completed: {{workOuts.selectedOptions.selected.length}}
+        </p>
+
+        <mat-card-actions>
+            <button mat-button>Delete</button>
+
+        </mat-card-actions>
+    </mat-card>
+    <br>
+
+</mat-card>
+<br>
+<mat-card>
+    <mat-card-title>Completed</mat-card-title>
+
+
+</mat-card>
+<br>

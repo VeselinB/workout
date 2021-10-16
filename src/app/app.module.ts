@@ -9,6 +9,7 @@ import { WorkoutsComponent } from './workouts/workouts.component';
 
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { reducer } from './workouts/workout.reducer';
 
 
 @NgModule({
@@ -23,7 +24,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     BrowserAnimationsModule,
     StoreModule.forRoot({
       
-     // workout: reducerOrder,
+     workout: reducer,
     
     }),
     StoreDevtoolsModule.instrument({

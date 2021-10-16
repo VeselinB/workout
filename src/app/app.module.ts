@@ -10,6 +10,9 @@ import { WorkoutsComponent } from './workouts/workouts.component';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { reducer } from './workouts/workout.reducer';
+import { EffectsModule } from '@ngrx/effects';
+
+import {WorkOutEffects} from '../app/workouts/workout.effects'
 
 
 @NgModule({
@@ -22,6 +25,7 @@ import { reducer } from './workouts/workout.reducer';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    EffectsModule.forRoot([WorkOutEffects]),
     StoreModule.forRoot({
       
      workout: reducer,

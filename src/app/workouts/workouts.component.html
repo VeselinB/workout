@@ -4,12 +4,36 @@
     <mat-card *ngFor="let workOut of Object.values(activeWorkOuts)">
 
         <mat-card-subtitle>{{workOut.title}}</mat-card-subtitle>
-        <mat-selection-list #workOuts (selectionChange)="slectedChange($event, workOut)">
+
+        <mat-selection-list #workOuts (selectionChange)="slectedChange($event, workOut); ">
+
             <mat-list-option *ngFor="let excercise of Object.values(workOut.exersices)" [value]="excercise.id"
-                [selected]="excercise.status">
-                {{excercise.title}}
+                [disableRipple]="true" [selected]="excercise.status">
+                <div (click)="$event.stopPropagation(); $event.preventDefault()">
+                    <div style="display:flex; justify-content:space-between;align-items:center">
+                        <div style="display:flex;align-items:center">
+                            <mat-icon matListAvatar>directions_run</mat-icon>
+
+                            <div style="display:flex; flex-direction:column">
+                                <div>
+                                    <h3 matLine> {{excercise.title}}</h3>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div>
+                            <button mat-icon-button (click)="onDelete($event, excercise.id, workOut )">
+                                <mat-icon style="color: red">delete</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </mat-list-option>
+
+
+
         </mat-selection-list>
+
 
         <p>
             Completed: {{workOuts.selectedOptions.selected.length}}

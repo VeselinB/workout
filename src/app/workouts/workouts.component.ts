@@ -34,6 +34,27 @@ export class WorkoutsComponent implements OnInit {
 
       },
 
+    },
+    {
+
+      id: uuid(),
+      title: "Today",
+      status: true,
+      exersices: {
+
+        1: {
+          id: "1",
+          title: "excercise1",
+          status: true
+        },
+        2: {
+          id: "2",
+          title: "excercise2",
+          status: false
+        }
+
+      },
+
     }
   ]
   Object = Object;
@@ -42,23 +63,51 @@ export class WorkoutsComponent implements OnInit {
 
   ngOnInit(): void {
     this.newWork = new WorkOutClass(uuid(), "Title");
-    this.store.dispatch(WorkoutsActions.loadWorkOuts({ WorkOuts: this.activeWorkOuts }));
-    this.store.dispatch(WorkoutsActions.addWorkOut({ WorkOut: this.newWork }));
+    // this.store.dispatch(WorkoutsActions.loadWorkOuts({ WorkOuts: this.activeWorkOuts }));
+    this.store.dispatch(WorkoutsActions.loadWorkOutsStart());
+    // this.store.dispatch(WorkoutsActions.addWorkOut({ WorkOut: this.newWork }));
     this.store.subscribe(state => {
-      console.log(state["workout"]["entities"])
-      this.activeWorkOuts = state["workout"]["entities"]
+      // console.log(...state["workout"]["entities"])
+      window.localStorage.setItem("workouts", JSON.stringify(Object.values(state["workout"]["entities"])))
+      this.activeWorkOuts = this.getActive(state["workout"]["entities"]);
     });
   }
-
+  //TODO
+  getActive(workOuts) {
+    console.log(workOuts)
+    let result = [];
+    for (const key in workOuts) {
+      if (workOuts[key].status == false) {
+        result.push({ ...workOuts[key]})
+      }
+    }
+    console.log(result)
+    return result;
+  }
   slectedChange(selected, workOut: WorkOutClass) {
     const exerciseId = selected.option.value;
     const status = selected.option.selected;
     let updatedExercise = { ...workOut.exersices[exerciseId] };
     updatedExercise.status = status;
     //  console.log(  updatedExercise.status)
+    let workOutStatus = false;
     const updatedWorkOutExercises = { ...workOut.exersices, [exerciseId]: { ...updatedExercise } };
-    const updatedWorkOut: WorkOutClass = { ...workOut, exersices: { ...updatedWorkOutExercises } }
+    for (const id in updatedWorkOutExercises) {
+      workOutStatus = updatedWorkOutExercises[id].status;
+      //  console.log(updatedWorkOutExercises[id].status)
+      if (!updatedWorkOutExercises[id].status) {
+        //   console.log(updatedWorkOutExercises[id].status)
+        break;
+      }
+
+    }
+    const updatedWorkOut: WorkOutClass = { ...workOut, exersices: { ...updatedWorkOutExercises }, status: workOutStatus }
     this.store.dispatch(WorkoutsActions.updateWorkOut({ update: { id: workOut.id, changes: { ...updatedWorkOut } } }));
     //  console.log(workOut.id )
+  }
+
+  onDelete(e, id) {
+    e.stopPropagation();
+    e.preventDefault();
   }
 }

@@ -10,7 +10,7 @@ export class WorkOutClass {
     constructor(id: string, title: string) {
         this.id = id;
         this.title = title;
-        this.status = true;
+        this.status = false;
         this.exersices = {};
     }
 }

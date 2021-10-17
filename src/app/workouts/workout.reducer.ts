@@ -32,6 +32,9 @@ const workOutsReducer = createReducer(
         console.log(update)
         return adapter.updateOne(update, state);
     }),
+    on(WorkOutActions.deleteWorkOut, (state, { id }) => {
+        return adapter.removeOne(id, state);
+      }),
 
 )
 

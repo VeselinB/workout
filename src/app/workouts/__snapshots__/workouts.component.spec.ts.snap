@@ -1,0 +1,138 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WorkoutsComponent Should display a flight from DUB to WRO 1`] = `
+<app-workouts
+  Object={[Function Function]}
+  activeWorkOuts={[Function Array]}
+  callAPIDialog={[Function TemplateRef_]}
+  completedWorkOuts={[Function Array]}
+  dialog={[Function MatDialogMock]}
+  disabled={[Function Boolean]}
+  newWork={[Function WorkOutClass]}
+  store={[Function Store]}
+>
+  <div
+    style="margin-left: 20px; margin-right: 20px;"
+  >
+    <h2>
+      WorkOuts
+    </h2>
+    <button
+      class="mat-focus-indicator mat-raised-button mat-button-base mat-primary"
+      color="primary"
+      mat-raised-button=""
+      style="margin-bottom: 20px;"
+    >
+      <span
+        class="mat-button-wrapper"
+      >
+        <mat-icon
+          aria-hidden="true"
+          class="mat-icon notranslate material-icons mat-icon-no-color"
+          data-mat-icon-type="font"
+          role="img"
+        >
+          add
+        </mat-icon>
+        New workout
+      </span>
+      <span
+        class="mat-button-ripple mat-ripple"
+        matripple=""
+      />
+      <span
+        class="mat-button-focus-overlay"
+      />
+    </button>
+    <mat-card
+      class="mat-card mat-focus-indicator"
+    >
+      <mat-card-title
+        class="mat-card-title"
+      >
+        Active
+      </mat-card-title>
+      <mat-card
+        class="mat-card mat-focus-indicator"
+        style="margin-bottom: 8px;"
+      >
+        <mat-card-subtitle
+          class="mat-card-subtitle"
+        >
+          Test
+        </mat-card-subtitle>
+        <mat-selection-list
+          aria-disabled="false"
+          aria-multiselectable="true"
+          class="mat-selection-list mat-list-base"
+          role="listbox"
+          tabindex="-1"
+        >
+        </mat-selection-list>
+        <p />
+        <mat-card-actions
+          class="mat-card-actions"
+        >
+          <button
+            class="mat-focus-indicator mat-raised-button mat-button-base mat-warn"
+            color="warn"
+            mat-raised-button=""
+          >
+            <span
+              class="mat-button-wrapper"
+            >
+              Delete
+            </span>
+            <span
+              class="mat-button-ripple mat-ripple"
+              matripple=""
+            />
+            <span
+              class="mat-button-focus-overlay"
+            />
+          </button>
+          <button
+            class="mat-focus-indicator mat-raised-button mat-button-base mat-primary"
+            color="primary"
+            mat-raised-button=""
+          >
+            <span
+              class="mat-button-wrapper"
+            >
+              <mat-icon
+                aria-hidden="true"
+                class="mat-icon notranslate material-icons mat-icon-no-color"
+                data-mat-icon-type="font"
+                role="img"
+              >
+                add
+              </mat-icon>
+              New exercise
+            </span>
+            <span
+              class="mat-button-ripple mat-ripple"
+              matripple=""
+            />
+            <span
+              class="mat-button-focus-overlay"
+            />
+          </button>
+        </mat-card-actions>
+      </mat-card>
+      <br />
+    </mat-card>
+    <br />
+    <mat-card
+      class="mat-card mat-focus-indicator"
+    >
+      <mat-card-title
+        class="mat-card-title"
+      >
+        Completed
+      </mat-card-title>
+      <br />
+    </mat-card>
+    <br />
+  </div>
+</app-workouts>
+`;

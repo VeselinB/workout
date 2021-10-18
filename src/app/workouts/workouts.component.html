@@ -1,116 +1,123 @@
 <div style="margin-left: 20px; margin-right: 20px;">
     <h2>WorkOuts</h2>
-<button style="margin-bottom: 20px;" mat-raised-button color="primary" (click)="openDialog('workout', undefined)"> <mat-icon>add</mat-icon>New workout</button>
-<mat-card>
-    <mat-card-title>Active</mat-card-title>
-    <mat-card   style="margin-bottom: 8px;" *ngFor="let workOut of Object.values(activeWorkOuts)">
+    <button style="margin-bottom: 20px;" mat-raised-button color="primary" (click)="openDialog('workout', undefined)">
+        <mat-icon>add</mat-icon>New workout
+    </button>
+    <div style="display: flex; flex-direction: row; width: 100%;">
+        <mat-card style="width: 100%; margin-right: 6px;">
+            <mat-card-title>Active</mat-card-title>
+            <mat-card style="margin-bottom: 8px;" *ngFor="let workOut of Object.values(activeWorkOuts)">
 
-        <mat-card-subtitle>{{workOut.title}}</mat-card-subtitle>
+                <mat-card-subtitle>{{workOut.title}}</mat-card-subtitle>
 
-        <mat-selection-list #workOuts (selectionChange)="slectedChange($event, workOut); ">
+                <mat-selection-list #workOuts (selectionChange)="slectedChange($event, workOut); ">
 
-            <mat-list-option  *ngFor="let excercise of Object.values(workOut.exersices)" [value]="excercise.id"
-                [disableRipple]="true" [selected]="excercise.status">
-                <div (click)="$event.stopPropagation(); $event.preventDefault()">
-                    <div style="display:flex; justify-content:space-between;align-items:center">
-                        <div style="display:flex;align-items:center">
-                            <mat-icon matListAvatar>directions_run</mat-icon>
+                    <mat-list-option *ngFor="let excercise of Object.values(workOut.exersices)" [value]="excercise.id"
+                        [disableRipple]="true" [selected]="excercise.status">
+                        <div (click)="$event.stopPropagation(); $event.preventDefault()">
+                            <div style="display:flex; justify-content:space-between;align-items:center">
+                                <div style="display:flex;align-items:center">
+                                    <mat-icon matListAvatar>directions_run</mat-icon>
 
-                            <div style="display:flex; flex-direction:column">
-                                <div>
-                                    <h3 matLine> {{excercise.title}}</h3>
+                                    <div style="display:flex; flex-direction:column">
+                                        <div>
+                                            <h3 matLine> {{excercise.title}}</h3>
+                                        </div>
+
+                                    </div>
                                 </div>
-
+                                <div>
+                                    <button mat-icon-button (click)="onDeleteEx($event, excercise.id, workOut )">
+                                        <mat-icon style="color: red">delete</mat-icon>
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                        <div>
-                            <button mat-icon-button (click)="onDeleteEx($event, excercise.id, workOut )">
-                                <mat-icon style="color: red">delete</mat-icon>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </mat-list-option>
+                    </mat-list-option>
 
 
 
-        </mat-selection-list>
+                </mat-selection-list>
 
 
-        <p>
-            <!-- Completed: {{workOuts.selectedOptions.selected.length}} -->
-        </p>
+                <p>
+                    <!-- Completed: {{workOuts.selectedOptions.selected.length}} -->
+                </p>
 
-        <mat-card-actions>
-            <button mat-raised-button color="warn" (click)="onDelete($event, workOut.id)">Delete</button>
-            <button mat-raised-button color="primary" (click)="openDialog('exercise', workOut )"> <mat-icon>add</mat-icon>New exercise</button>
-        </mat-card-actions>
-    </mat-card>
-    <br>
+                <mat-card-actions>
+                    <button mat-raised-button color="warn" (click)="onDelete($event, workOut.id)">Delete</button>
+                    <button mat-raised-button color="primary" (click)="openDialog('exercise', workOut )">
+                        <mat-icon>add</mat-icon>New exercise
+                    </button>
+                </mat-card-actions>
+            </mat-card>
+            <br>
 
-</mat-card>
-<br>
-<mat-card>
-    <mat-card-title>Completed</mat-card-title>
-    <mat-card  style="margin-bottom: 8px;" *ngFor="let workOut of Object.values(completedWorkOuts)">
+        </mat-card>
+        <br>
+        <mat-card style="width: 100%;">
+            <mat-card-title>Completed</mat-card-title>
+            <mat-card style="margin-bottom: 8px;" *ngFor="let workOut of Object.values(completedWorkOuts)">
 
-        <mat-card-subtitle>{{workOut.title}}</mat-card-subtitle>
+                <mat-card-subtitle>{{workOut.title}}</mat-card-subtitle>
 
-        <mat-selection-list #workOuts (selectionChange)="slectedChange($event, workOut); ">
+                <mat-selection-list #workOuts (selectionChange)="slectedChange($event, workOut); ">
 
-            <mat-list-option *ngFor="let excercise of Object.values(workOut.exersices)" [value]="excercise.id"
-                [disableRipple]="true" [selected]="excercise.status">
-                <div (click)="$event.stopPropagation(); $event.preventDefault()">
-                    <div style="display:flex; justify-content:space-between;align-items:center">
-                        <div style="display:flex;align-items:center">
-                            <mat-icon matListAvatar>directions_run</mat-icon>
+                    <mat-list-option *ngFor="let excercise of Object.values(workOut.exersices)" [value]="excercise.id"
+                        [disableRipple]="true" [selected]="excercise.status">
+                        <div (click)="$event.stopPropagation(); $event.preventDefault()">
+                            <div style="display:flex; justify-content:space-between;align-items:center">
+                                <div style="display:flex;align-items:center">
+                                    <mat-icon matListAvatar>directions_run</mat-icon>
 
-                            <div style="display:flex; flex-direction:column">
-                                <div>
-                                    <h3 matLine> {{excercise.title}}</h3>
+                                    <div style="display:flex; flex-direction:column">
+                                        <div>
+                                            <h3 matLine> {{excercise.title}}</h3>
+                                        </div>
+
+                                    </div>
                                 </div>
-
+                                <div>
+                                    <button mat-icon-button (click)="onDeleteEx($event, excercise.id, workOut )">
+                                        <mat-icon style="color: red">delete</mat-icon>
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                        <div>
-                            <button mat-icon-button (click)="onDeleteEx($event, excercise.id, workOut )">
-                                <mat-icon style="color: red">delete</mat-icon>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </mat-list-option>
+                    </mat-list-option>
 
 
 
-        </mat-selection-list>
+                </mat-selection-list>
 
 
-        <p>
-            <!-- Completed: {{workOuts.selectedOptions.selected.length}} -->
-        </p>
+                <p>
+                    <!-- Completed: {{workOuts.selectedOptions.selected.length}} -->
+                </p>
 
-        <mat-card-actions>
-            <button mat-raised-button color="warn" (click)="onDelete($event, workOut.id)">Delete</button>
+                <mat-card-actions>
+                    <button mat-raised-button color="warn" (click)="onDelete($event, workOut.id)">Delete</button>
 
-        </mat-card-actions>
-    </mat-card>
-    <br>
+                </mat-card-actions>
+            </mat-card>
+            <br>
 
-</mat-card>
-<br>
+        </mat-card>
+        <br>
+    </div>
 
-<ng-template #callAPIDialog>
-    <h2 matDialogTitle>{{type}}</h2>
-    <mat-form-field class="example-full-width" appearance="outline">
-        <mat-label>Name</mat-label>
-        <input  (keyup)="validator(input.value)" matInput #input>
-      </mat-form-field>
-    
-    <mat-dialog-actions align="end">
-        <button mat-raised-button color="warn" matDialogClose="no">No</button>
-        <button [disabled]="disabled" mat-raised-button color="primary" matDialogClose="yes" (click)="getValue(input.value)">Yes</button>
-    </mat-dialog-actions>
-</ng-template>
+    <ng-template #callAPIDialog>
+        <h2 matDialogTitle>{{type}}</h2>
+        <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Name</mat-label>
+            <input (keyup)="validator(input.value)" matInput #input>
+        </mat-form-field>
+
+        <mat-dialog-actions align="end">
+            <button mat-raised-button color="warn" matDialogClose="no">No</button>
+            <button [disabled]="disabled" mat-raised-button color="primary" matDialogClose="yes"
+                (click)="getValue(input.value)">Yes</button>
+        </mat-dialog-actions>
+    </ng-template>
 
 </div>

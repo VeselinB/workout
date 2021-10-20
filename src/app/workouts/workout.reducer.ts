@@ -1,4 +1,4 @@
-import { Action, createReducer, on } from '@ngrx/store';
+import { Action, createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { WorkOutClass } from '../models/workouts';
 import * as WorkOutActions from './workout.actions';
@@ -7,6 +7,7 @@ import * as WorkOutActions from './workout.actions';
 export interface State extends EntityState<WorkOutClass> {
     // additional entities state properties
     selectedWorkOutId: string | null;
+
 }
 
 
@@ -16,6 +17,8 @@ export const initialState: State = adapter.getInitialState({
     // additional entity state properties
     selectedWorkOutId: null,
 });
+
+
 
 const workOutsReducer = createReducer(
     initialState,
@@ -34,9 +37,19 @@ const workOutsReducer = createReducer(
     }),
     on(WorkOutActions.deleteWorkOut, (state, { id }) => {
         return adapter.removeOne(id, state);
-      }),
+    }),
 
 )
+
+
+export const {
+    selectIds,
+    selectEntities,
+    selectAll,
+    selectTotal,
+  } = adapter.getSelectors();
+
+
 
 export function reducer(state: State | undefined, action: Action) {
     return workOutsReducer(state, action);

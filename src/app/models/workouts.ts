@@ -2,6 +2,7 @@ import { ExersiceClass } from "./exersice";
 
 
 export class WorkOutClass {
+    
     id: string
     exersices: {[id:string]:ExersiceClass};
     status: Boolean

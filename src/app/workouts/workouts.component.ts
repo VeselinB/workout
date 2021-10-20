@@ -10,6 +10,8 @@ import * as WorkoutsActions from "../workouts/workout.actions"
 import { TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
+import * as Selector from './workout.selectors'
+
 import { v4 as uuid } from 'uuid';
 
 @Component({
@@ -73,15 +75,31 @@ export class WorkoutsComponent implements OnInit {
   constructor(private store: Store, private dialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.store.dispatch(WorkoutsActions.loadWorkOutsStart());
+
+    this.store.select(Selector.selectCompletedWorkEntities).subscribe(res=>{
+
+
+      this.completedWorkOuts = this.getCompleted(res);
+    })
+
+    this.store.select(Selector.selectActiveWorkEntities).subscribe(res=>{
+
+      this.activeWorkOuts = this.getActive(res);
+    })
+
+    this.store.select(Selector.selectWorkEntities).subscribe(res=>{
+      console.log(res)
+      window.localStorage.setItem("workouts", JSON.stringify(Object.values(res)))
+    })
     this.newWork = new WorkOutClass(uuid(), "Title");
     // this.store.dispatch(WorkoutsActions.loadWorkOuts({ WorkOuts: this.activeWorkOuts }));
     this.store.dispatch(WorkoutsActions.loadWorkOutsStart());
     // this.store.dispatch(WorkoutsActions.addWorkOut({ WorkOut: this.newWork }));
     this.store.subscribe(state => {
       // console.log(...state["workout"]["entities"])
-      window.localStorage.setItem("workouts", JSON.stringify(Object.values(state["workout"]["entities"])))
-      this.activeWorkOuts = this.getActive(state["workout"]["entities"]);
-      this.completedWorkOuts = this.getCompleted(state["workout"]["entities"]);
+    //  window.localStorage.setItem("workouts", JSON.stringify(Object.values(state["workout"]["entities"])))
+ 
     });
   }
   //TODO

@@ -33,45 +33,20 @@ import {
   );
 
   export const selectCompletedWorkEntities = createSelector(
-    selectWorkState,
+    selectAllWorks,
   
-    (state)=>{
-        console.log(state.entities)
-        let entities=state.entities;
-        let result={}
-        for (const key in entities) {
-            if (entities[key].status == true) {
-              result[key]=({ ...entities[key] })
-            }
-          }
-          console.log(result)
-          return result;
-    }
+     workouts=>workouts.filter(workout=>workout.status==true)
+  
   );
 
   export const selectActiveWorkEntities = createSelector(
-    selectWorkState,
-  
-    (state)=>{
-        console.log(state.entities)
-        let entities=state.entities;
-        let result={}
-        for (const key in entities) {
-            if (entities[key].status == false) {
-              result[key]=({ ...entities[key] })
-            }
-          }
-          console.log(result)
-          return result;
-    }
+    selectAllWorks,
+ 
+     workouts=>workouts.filter(workout=>workout.status==false)
+ 
   );
-//   export const selectCurrentWorkId = createSelector(
-//     selectWorkState,
-//     fromWorkouts.getSelectedWorkId
-//   );
-  
-//   export const selectCurrentWork = createSelector(
-//     selectWorkEntities,
-//     selectCurrentWorkId,
-//     (WorkEntities, WorkId) => WorkEntities[WorkId]
-//   );
+
+  export const loadedState =  createSelector(
+    selectWorkState,
+    state=>state.loaded
+  )

@@ -5,8 +5,9 @@ import * as WorkOutActions from './workout.actions';
 
 
 export interface State extends EntityState<WorkOutClass> {
-    // additional entities state properties
-    selectedWorkOutId: string | null;
+   
+    loaded: boolean;
+
 
 }
 
@@ -14,22 +15,22 @@ export interface State extends EntityState<WorkOutClass> {
 export const adapter: EntityAdapter<WorkOutClass> = createEntityAdapter<WorkOutClass>();
 
 export const initialState: State = adapter.getInitialState({
-    // additional entity state properties
-    selectedWorkOutId: null,
-});
+  
+    loaded: false
 
+
+
+});
 
 
 const workOutsReducer = createReducer(
     initialState,
-    // on(UserActions.addBook, (state, { book }) => {
-    //   return adapter.addOne(book, state)
-    // }),
+ 
     on(WorkOutActions.addWorkOut, (state, { WorkOut }) => {
         return adapter.addOne(WorkOut, state);
     }),
     on(WorkOutActions.loadWorkOuts, (state, { WorkOuts }) => {
-        return adapter.addMany(WorkOuts, state);
+        return adapter.addMany(WorkOuts, {  ...state, loaded: true,});
     }),
     on(WorkOutActions.updateWorkOut, (state, { update }) => {
         console.log(update)
@@ -47,7 +48,7 @@ export const {
     selectEntities,
     selectAll,
     selectTotal,
-  } = adapter.getSelectors();
+} = adapter.getSelectors();
 
 
 

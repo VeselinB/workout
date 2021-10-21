@@ -3,8 +3,9 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { EMPTY, of } from 'rxjs';
 import { map, mergeMap, catchError, tap, switchMap } from 'rxjs/operators';
 import * as WorkOutActions from './workout.actions'
+import * as WorkOutSelectors from './workout.selectors'
 
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 
 
 
@@ -18,18 +19,22 @@ export class WorkOutEffects {
     workOutsLoad$ = createEffect(() =>
         this.actions$.pipe(
             ofType(WorkOutActions.loadWorkOutsStart),
-
+            
             tap(actions => {
+                this.store.select(WorkOutSelectors.loadedState).subscribe((loaded) => {
+          
+                    const workouts = localStorage.getItem('workouts');
 
-                const workouts = localStorage.getItem('workouts');
-
-                if (!!workouts) {
-                    console.log(JSON.parse(workouts))
-                    //  this.store.dispatch(BooksActions.loadBooks({ books: [...res] }))
-                    this.store.dispatch(WorkOutActions.loadWorkOuts({ WorkOuts: JSON.parse(workouts) }));
-
-                }
-
+                    if (!!workouts && !loaded ) {
+                       console.log(loaded)
+                  
+                        this.store.dispatch(WorkOutActions.loadWorkOuts({ WorkOuts: JSON.parse(workouts) }));
+               
+    
+                    }
+    
+                })
+             
 
 
 

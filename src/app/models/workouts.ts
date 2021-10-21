@@ -8,6 +8,7 @@ export class WorkOutClass {
     status: Boolean
     title: string
 
+
     constructor(id: string, title: string) {
         this.id = id;
         this.title = title;

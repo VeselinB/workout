@@ -9,6 +9,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { ExersiceClass } from '../models/exersice';
 
+declare var require: any
+// const { toMatchImageSnapshot } = require('jest-image-snapshot');
+// const puppeteer = require('puppeteer');
+// expect.extend({ toMatchImageSnapshot });
 export class MatDialogMock {
 
   open() {
@@ -19,10 +23,12 @@ export class MatDialogMock {
 }
 
 describe('WorkoutsComponent', () => {
+  let browser;
   let component: WorkoutsComponent;
   let fixture: ComponentFixture<WorkoutsComponent>;
 
   beforeEach(async () => {
+   // browser = await puppeteer.launch();
     await TestBed.configureTestingModule({
       imports: [
         MaterialModule, BrowserAnimationsModule,
@@ -55,7 +61,11 @@ describe('WorkoutsComponent', () => {
     expect(exercise.status).toBe(false);
   });
 
-  it('should display a new empty workout', () => {
+  it('render correctly',async  () => {
+    // const page = await browser.newPage();
+    // await page.goto('https://localhost:3000');
+    // const image = await page.screenshot();
+    const element: HTMLElement = fixture.nativeElement;
     component.activeWorkOuts = [{
       id: "1",
       exersices: {},
@@ -64,6 +74,7 @@ describe('WorkoutsComponent', () => {
     }];
     fixture.detectChanges();
    expect(fixture).toMatchSnapshot();
+   expect(element.textContent).toContain("exercise");
   });
 });
 

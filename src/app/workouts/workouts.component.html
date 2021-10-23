@@ -1,18 +1,26 @@
 <div style="margin-left: 20px; margin-right: 20px;">
-    <h2>WorkOuts</h2>
-    <button style="margin-bottom: 20px;" mat-raised-button color="primary" (click)="openDialog('workout', undefined)">
-        <mat-icon>add</mat-icon>New workout
-    </button>
+    <h2>{{'Workouts'|translate}}</h2>
+    <div style="display:flex;flex-direction: row;margin-bottom: 20px;">
+        <div style="margin-top: 4px;">
+            <img (click)="changeLanguage('en')" *ngIf="language=='bg'" class="flag" src="/assets/icons/bg.png">
+            <img (click)="changeLanguage('bg')" *ngIf="language=='en'" class="flag" src="/assets/icons/gb.png">
+        </div>
+        <button style=" margin-left: 10px;" mat-raised-button color="primary"
+            (click)="openDialog('workout', undefined)">
+            <mat-icon>add</mat-icon>{{'New Workout' | translate}}
+        </button>
+    </div>
+
     <div style="display: flex; flex-direction: row; width: 100%;">
         <mat-card style="width: 100%; margin-right: 6px;">
-            <mat-card-title>Active</mat-card-title>
-            <mat-card style="margin-bottom: 8px;" *ngFor="let workOut of Object.values(activeWorkOuts)">
+            <mat-card-title>{{'Active'|translate}}</mat-card-title>
+            <mat-card style="margin-bottom: 8px;" *ngFor="let Workout of Object.values(activeWorkouts)">
 
-                <mat-card-subtitle>{{workOut.title}}</mat-card-subtitle>
+                <mat-card-subtitle>{{Workout.title}}</mat-card-subtitle>
 
-                <mat-selection-list #workOuts (selectionChange)="slectedChange($event, workOut); ">
+                <mat-selection-list #Workouts (selectionChange)="slectedChange($event, Workout); ">
 
-                    <mat-list-option *ngFor="let excercise of Object.values(workOut.exersices)" [value]="excercise.id"
+                    <mat-list-option *ngFor="let excercise of Object.values(Workout.exersices)" [value]="excercise.id"
                         [disableRipple]="true" [selected]="excercise.status">
                         <div (click)="$event.stopPropagation(); $event.preventDefault()">
                             <div style="display:flex; justify-content:space-between;align-items:center">
@@ -27,7 +35,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <button mat-icon-button (click)="onDeleteEx($event, excercise.id, workOut )">
+                                    <button mat-icon-button (click)="onDeleteEx($event, excercise.id, Workout )">
                                         <mat-icon style="color: red">delete</mat-icon>
                                     </button>
                                 </div>
@@ -41,13 +49,13 @@
 
 
                 <p>
-                    <!-- Completed: {{workOuts.selectedOptions.selected.length}} -->
+                    <!-- Completed: {{Workouts.selectedOptions.selected.length}} -->
                 </p>
 
                 <mat-card-actions>
-                    <button mat-raised-button color="warn" (click)="onDelete($event, workOut.id)">Delete</button>
-                    <button mat-raised-button color="primary" (click)="openDialog('exercise', workOut )">
-                        <mat-icon>add</mat-icon>New exercise
+                    <button mat-raised-button color="warn" (click)="onDelete($event, Workout.id)">{{'Delete'| translate}}</button>
+                    <button mat-raised-button color="primary" (click)="openDialog('exercise', Workout )">
+                        <mat-icon>add</mat-icon>{{'Add exercise'| translate}}
                     </button>
                 </mat-card-actions>
             </mat-card>
@@ -56,14 +64,14 @@
         </mat-card>
         <br>
         <mat-card style="width: 100%;">
-            <mat-card-title>Completed</mat-card-title>
-            <mat-card style="margin-bottom: 8px;" *ngFor="let workOut of Object.values(completedWorkOuts)">
+            <mat-card-title>{{"Completed"|translate}}</mat-card-title>
+            <mat-card style="margin-bottom: 8px;" *ngFor="let Workout of Object.values(completedWorkouts)">
 
-                <mat-card-subtitle>{{workOut.title}}</mat-card-subtitle>
+                <mat-card-subtitle>{{Workout.title}}</mat-card-subtitle>
 
-                <mat-selection-list #workOuts (selectionChange)="slectedChange($event, workOut); ">
+                <mat-selection-list #Workouts (selectionChange)="slectedChange($event, Workout); ">
 
-                    <mat-list-option *ngFor="let excercise of Object.values(workOut.exersices)" [value]="excercise.id"
+                    <mat-list-option *ngFor="let excercise of Object.values(Workout.exersices)" [value]="excercise.id"
                         [disableRipple]="true" [selected]="excercise.status">
                         <div (click)="$event.stopPropagation(); $event.preventDefault()">
                             <div style="display:flex; justify-content:space-between;align-items:center">
@@ -78,7 +86,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <button mat-icon-button (click)="onDeleteEx($event, excercise.id, workOut )">
+                                    <button mat-icon-button (click)="onDeleteEx($event, excercise.id, Workout )">
                                         <mat-icon style="color: red">delete</mat-icon>
                                     </button>
                                 </div>
@@ -92,11 +100,11 @@
 
 
                 <p>
-                    <!-- Completed: {{workOuts.selectedOptions.selected.length}} -->
+                    <!-- Completed: {{Workouts.selectedOptions.selected.length}} -->
                 </p>
 
                 <mat-card-actions>
-                    <button mat-raised-button color="warn" (click)="onDelete($event, workOut.id)">Delete</button>
+                    <button mat-raised-button color="warn" (click)="onDelete($event, Workout.id)">{{'Delete'| translate}}</button>
 
                 </mat-card-actions>
             </mat-card>
@@ -107,7 +115,7 @@
     </div>
 
     <ng-template #callAPIDialog>
-        <h2 matDialogTitle>{{type}}</h2>
+        <h2 matDialogTitle>{{type | translate}}</h2>
         <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Name</mat-label>
             <input (keyup)="validator(input.value)" matInput #input>

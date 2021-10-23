@@ -1,0 +1,27 @@
+{
+    "Add exercise": "Add exercise",
+    "Completed":"Completed",
+    "Delete": "Delete",
+    "Active":"Active",
+    "Workouts": "Workouts",
+    "New Workout" : "New Workout",
+    "HELLO": "hello",
+    "Sign_In": "Sign In",
+    "Password": "Please enter your password",
+    "Email": "Email",
+    "Orders":"Orders",
+    "History":"History",
+    "New order": "New order",
+    "Address":"Address",
+    "Menu":"Menu",
+    "Tracking":"Tracking",
+    "Cancel":"Cancel",
+    "Complete":"Complete",
+    "Order info":"Order info",
+    "Ordered by":"Ordered by",
+    "Order address":"Order address",
+    "Send":"Send",
+    "Choose":"Choose",
+    "SignOut": "SignOut"
+ 
+}

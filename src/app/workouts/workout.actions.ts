@@ -1,18 +1,21 @@
 import { createAction, props } from '@ngrx/store';
 import { Update, EntityMap, EntityMapOne, Predicate } from '@ngrx/entity';
 
-import { WorkOutClass } from '../models/workouts';
+import { WorkoutClass } from '../models/Workouts';
 
-export const loadWorkOuts = createAction('[WorkOut/API] Load WorkOuts', props<{ WorkOuts: WorkOutClass[] }>());
-export const loadWorkOutsStart = createAction('[WorkOut/API] Load Start WorkOut');
-
-export const addWorkOut = createAction('[WorkOut/API] Add WorkOut', props<{ WorkOut: WorkOutClass }>());
-export const addWorkOutStart = createAction('[WorkOut/API] Add WorkOut Start', props<{ WorkOut: WorkOutClass }>());
-
-export const deleteWorkOut = createAction('[WorkOut/API] Delete WorkOut', props<{ id: string }>());
-export const deleteWorkOutStart = createAction('[WorkOut/API] Delete WorkOut Start', props<{ id: string }>());
+export const changeLanguage = createAction('[Workout/API] Change Language', props<{ language: string }>());
 
 
-export const updateWorkOut = createAction('[WorkOut/API] Update WorkOut', props<{ update: Update<WorkOutClass> }>());
-export const updateWorkOutStart = createAction('[WorkOut/API] Update WorkOut Start', props<{ update: Update<WorkOutClass> }>());
+export const loadWorkouts = createAction('[Workout/API] Load Workouts', props<{ Workouts: WorkoutClass[] }>());
+export const loadWorkoutsStart = createAction('[Workout/API] Load Start Workout');
+
+export const addWorkout = createAction('[Workout/API] Add Workout', props<{ Workout: WorkoutClass }>());
+export const addWorkoutStart = createAction('[Workout/API] Add Workout Start', props<{ Workout: WorkoutClass }>());
+
+export const deleteWorkout = createAction('[Workout/API] Delete Workout', props<{ id: string }>());
+export const deleteWorkoutStart = createAction('[Workout/API] Delete Workout Start', props<{ id: string }>());
+
+
+export const updateWorkout = createAction('[Workout/API] Update Workout', props<{ update: Update<WorkoutClass> }>());
+export const updateWorkoutStart = createAction('[Workout/API] Update Workout Start', props<{ update: Update<WorkoutClass> }>());
 

@@ -3,7 +3,7 @@ import {
     createFeatureSelector,
     ActionReducerMap,
   } from '@ngrx/store';
-  import * as fromWorkouts from './workout.reducer';
+  import * as fromWorkouts from './Workout.reducer';
   
   export interface State {
     Works: fromWorkouts.State;
@@ -13,8 +13,14 @@ import {
     Works: fromWorkouts.reducer,
   };
   
-  export const selectWorkState = createFeatureSelector<fromWorkouts.State>('workout');
+  export const selectWorkState = createFeatureSelector<fromWorkouts.State>('Workout');
   
+
+  export const selectCurrentLanguage = createSelector(
+    selectWorkState,
+    (state)=>state.language
+  );
+
   export const selectWorkIds = createSelector(
     selectWorkState,
     fromWorkouts.selectIds
@@ -35,14 +41,14 @@ import {
   export const selectCompletedWorkEntities = createSelector(
     selectAllWorks,
   
-     workouts=>workouts.filter(workout=>workout.status==true)
+     Workouts=>Workouts.filter(Workout=>Workout.status==true)
   
   );
 
   export const selectActiveWorkEntities = createSelector(
     selectAllWorks,
  
-     workouts=>workouts.filter(workout=>workout.status==false)
+     Workouts=>Workouts.filter(Workout=>Workout.status==false)
  
   );
 

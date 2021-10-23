@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { reducer } from './workout.reducer';
+import { reducer } from './Workout.reducer';
 import { StoreModule } from '@ngrx/store';
-import { WorkoutsComponent } from './workouts.component';
+import { WorkoutsComponent } from './Workouts.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { MaterialModule } from '../material/material.module';
@@ -34,7 +34,7 @@ describe('WorkoutsComponent', () => {
         MaterialModule, BrowserAnimationsModule,
         HttpClientModule,
         StoreModule.forRoot({
-          workout: reducer,
+          Workout: reducer,
         })
       ],
       declarations: [WorkoutsComponent],
@@ -66,7 +66,7 @@ describe('WorkoutsComponent', () => {
     // await page.goto('https://localhost:3000');
     // const image = await page.screenshot();
     const element: HTMLElement = fixture.nativeElement;
-    component.activeWorkOuts = [{
+    component.activeWorkouts = [{
       id: "1",
       exersices: {},
       status: false,

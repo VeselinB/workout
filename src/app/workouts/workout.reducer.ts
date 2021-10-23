@@ -1,44 +1,52 @@
 import { Action, createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { WorkOutClass } from '../models/workouts';
-import * as WorkOutActions from './workout.actions';
+import { WorkoutClass } from '../models/Workouts';
+import * as WorkoutActions from './Workout.actions';
 
 
-export interface State extends EntityState<WorkOutClass> {
-   
+export interface State extends EntityState<WorkoutClass> {
+
     loaded: boolean;
+    language: string;
 
 
 }
 
 
-export const adapter: EntityAdapter<WorkOutClass> = createEntityAdapter<WorkOutClass>();
+export const adapter: EntityAdapter<WorkoutClass> = createEntityAdapter<WorkoutClass>();
 
 export const initialState: State = adapter.getInitialState({
-  
-    loaded: false
+
+    loaded: false,
+    language: "bg"
 
 
 
 });
 
 
-const workOutsReducer = createReducer(
+const WorkoutsReducer = createReducer(
     initialState,
- 
-    on(WorkOutActions.addWorkOut, (state, { WorkOut }) => {
-        return adapter.addOne(WorkOut, state);
+
+    on(WorkoutActions.addWorkout, (state, { Workout }) => {
+        return adapter.addOne(Workout, state);
     }),
-    on(WorkOutActions.loadWorkOuts, (state, { WorkOuts }) => {
-        return adapter.addMany(WorkOuts, {  ...state, loaded: true,});
+    on(WorkoutActions.loadWorkouts, (state, { Workouts }) => {
+        return adapter.addMany(Workouts, { ...state, loaded: true, });
     }),
-    on(WorkOutActions.updateWorkOut, (state, { update }) => {
+    on(WorkoutActions.updateWorkout, (state, { update }) => {
         console.log(update)
         return adapter.updateOne(update, state);
     }),
-    on(WorkOutActions.deleteWorkOut, (state, { id }) => {
+    on(WorkoutActions.deleteWorkout, (state, { id }) => {
         return adapter.removeOne(id, state);
     }),
+
+
+    on(WorkoutActions.changeLanguage, (state, { language }) => {
+        return { ...state, language: language };
+    }),
+
 
 )
 
@@ -53,5 +61,5 @@ export const {
 
 
 export function reducer(state: State | undefined, action: Action) {
-    return workOutsReducer(state, action);
+    return WorkoutsReducer(state, action);
 }

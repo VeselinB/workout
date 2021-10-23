@@ -1,22 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`WorkoutsComponent render correctly 1`] = `
-<app-workouts
+<app-Workouts
   Object={[Function Function]}
-  activeWorkOuts={[Function Array]}
+  activeWorkouts={[Function Array]}
   callAPIDialog={[Function TemplateRef_]}
-  completedWorkOuts={[Function Array]}
+  completedWorkouts={[Function Array]}
   dialog={[Function MatDialogMock]}
   disabled={[Function Boolean]}
   name={[Function Object]}
-  newWork={[Function WorkOutClass]}
+  newWork={[Function WorkoutClass]}
   store={[Function Store]}
 >
   <div
     style="margin-left: 20px; margin-right: 20px;"
   >
     <h2>
-      WorkOuts
+      Workouts
     </h2>
     <button
       class="mat-focus-indicator mat-raised-button mat-button-base mat-primary"
@@ -35,7 +35,7 @@ exports[`WorkoutsComponent render correctly 1`] = `
         >
           add
         </mat-icon>
-        New workout 
+        New Workout 
       </span>
       <span
         class="mat-button-ripple mat-ripple"
@@ -141,5 +141,5 @@ exports[`WorkoutsComponent render correctly 1`] = `
       <br />
     </div>
   </div>
-</app-workouts>
+</app-Workouts>
 `;

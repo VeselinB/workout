@@ -1,7 +1,7 @@
 import { ExersiceClass } from "./exersice";
 
 
-export class WorkOutClass {
+export class WorkoutClass {
     
     id: string
     exersices: {[id:string]:ExersiceClass};

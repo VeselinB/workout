@@ -2,33 +2,33 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { EMPTY, of } from 'rxjs';
 import { map, mergeMap, catchError, tap, switchMap } from 'rxjs/operators';
-import * as WorkOutActions from './workout.actions'
-import * as WorkOutSelectors from './workout.selectors'
+import * as WorkoutActions from './Workout.actions'
+import * as WorkoutSelectors from './Workout.selectors'
 
 import { select, Store } from '@ngrx/store';
 
 
 
 @Injectable()
-export class WorkOutEffects {
+export class WorkoutEffects {
 
     constructor(public store: Store<any>, private actions$: Actions) {
 
     }
 
-    workOutsLoad$ = createEffect(() =>
+    WorkoutsLoad$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(WorkOutActions.loadWorkOutsStart),
+            ofType(WorkoutActions.loadWorkoutsStart),
             
             tap(actions => {
-                this.store.select(WorkOutSelectors.loadedState).subscribe((loaded) => {
+                this.store.select(WorkoutSelectors.loadedState).subscribe((loaded) => {
           
-                    const workouts = localStorage.getItem('workouts');
+                    const Workouts = localStorage.getItem('Workouts');
 
-                    if (!!workouts && !loaded ) {
+                    if (!!Workouts && !loaded ) {
                        console.log(loaded)
                   
-                        this.store.dispatch(WorkOutActions.loadWorkOuts({ WorkOuts: JSON.parse(workouts) }));
+                        this.store.dispatch(WorkoutActions.loadWorkouts({ Workouts: JSON.parse(Workouts) }));
                
     
                     }

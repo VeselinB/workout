@@ -4,26 +4,27 @@ import { Store } from '@ngrx/store';
 
 import { ExersiceClass } from "../models/exersice"
 
-import { WorkOutClass } from '../models/workouts';
-import * as WorkoutsActions from "../workouts/workout.actions"
+import { WorkoutClass } from '../models/Workouts';
+import * as WorkoutsActions from "../Workouts/Workout.actions"
 
 import { TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import * as Selector from './workout.selectors'
+import * as Selector from './Workout.selectors'
 
 import { v4 as uuid } from 'uuid';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-workouts',
-  templateUrl: './workouts.component.html',
-  styleUrls: ['./workouts.component.scss']
+  selector: 'app-Workouts',
+  templateUrl: './Workouts.component.html',
+  styleUrls: ['./Workouts.component.scss']
 })
 export class WorkoutsComponent implements OnInit {
 
   @ViewChild('callAPIDialog') callAPIDialog: TemplateRef<any>;
-  completedWorkOuts: WorkOutClass[] = []
-  activeWorkOuts: WorkOutClass[] = [
+  completedWorkouts: WorkoutClass[] = []
+  activeWorkouts: WorkoutClass[] = [
     {
 
       id: uuid(),
@@ -67,13 +68,16 @@ export class WorkoutsComponent implements OnInit {
 
     }
   ]
+  language = "bg";
   Object = Object;
-  newWork: WorkOutClass;
+  newWork: WorkoutClass;
   type: string;
   data: any;
   disabled: boolean = true;
-  constructor(private store: Store, private dialog: MatDialog) { }
   name = { name: "Vesko" }
+
+  constructor(private store: Store, private dialog: MatDialog, private translate: TranslateService) { }
+
   ngOnInit(): void {
     let test = {
       name: "Stoil",
@@ -122,63 +126,80 @@ export class WorkoutsComponent implements OnInit {
 
 
 
-    this.store.dispatch(WorkoutsActions.loadWorkOutsStart());
+    this.store.dispatch(WorkoutsActions.loadWorkoutsStart());
+
+    this.store.select(Selector.selectCurrentLanguage).subscribe(language => {
+      this.language = language;
+      this.translate.use(language);
+
+    })
 
     this.store.select(Selector.selectCompletedWorkEntities).subscribe(res => {
 
 
-      this.completedWorkOuts = res;
+      this.completedWorkouts = res;
     })
 
     this.store.select(Selector.selectActiveWorkEntities).subscribe(res => {
 
-      this.activeWorkOuts = res;
+      this.activeWorkouts = res;
     })
 
     this.store.select(Selector.selectAllWorks).subscribe(res => {
 
-      window.localStorage.setItem("workouts", JSON.stringify(Object.values(res)))
+      window.localStorage.setItem("Workouts", JSON.stringify(Object.values(res)))
 
 
     })
-    this.newWork = new WorkOutClass(uuid(), "Title");
 
-    this.store.dispatch(WorkoutsActions.loadWorkOutsStart());
+    this.newWork = new WorkoutClass(uuid(), "Title");
+
+    this.store.dispatch(WorkoutsActions.loadWorkoutsStart());
 
 
   }
 
- 
 
-  slectedChange(selected, workOut: WorkOutClass) {
+   capitalizeFirstLetter(string) {
+    return string[0].toUpperCase() + [...string.slice(1).toLowerCase()].join("");
+}
+
+  changeLanguage(language) {
+    this.store.dispatch(WorkoutsActions.changeLanguage({ language: language }))
+    console.log(language)
+    // this.language = language;
+    //this.translate.use(language);
+  }
+
+  slectedChange(selected, Workout: WorkoutClass) {
     const exerciseId = selected.option.value;
     const status = selected.option.selected;
-    let updatedExercise = { ...workOut.exersices[exerciseId] };
+    let updatedExercise = { ...Workout.exersices[exerciseId] };
     updatedExercise.status = status;
 
-    let workOutStatus = false;
-    const updatedWorkOutExercises = { ...workOut.exersices, [exerciseId]: { ...updatedExercise } };
-    for (const id in updatedWorkOutExercises) {
-      workOutStatus = updatedWorkOutExercises[id].status;
-  
-      if (!updatedWorkOutExercises[id].status) {
-   
+    let WorkoutStatus = false;
+    const updatedWorkoutExercises = { ...Workout.exersices, [exerciseId]: { ...updatedExercise } };
+    for (const id in updatedWorkoutExercises) {
+      WorkoutStatus = updatedWorkoutExercises[id].status;
+
+      if (!updatedWorkoutExercises[id].status) {
+
         break;
       }
 
     }
-    const updatedWorkOut: WorkOutClass = { ...workOut, exersices: { ...updatedWorkOutExercises }, status: workOutStatus }
-    this.store.dispatch(WorkoutsActions.updateWorkOut({ update: { id: workOut.id, changes: { ...updatedWorkOut } } }));
+    const updatedWorkout: WorkoutClass = { ...Workout, exersices: { ...updatedWorkoutExercises }, status: WorkoutStatus }
+    this.store.dispatch(WorkoutsActions.updateWorkout({ update: { id: Workout.id, changes: { ...updatedWorkout } } }));
 
   }
-  onDeleteEx(e, id, workOut) {
+  onDeleteEx(e, id, Workout) {
     e.stopPropagation();
     e.preventDefault();
 
-    const updatedWorkOutExercises = { ...workOut.exersices };
-    delete updatedWorkOutExercises[id];
-    const updatedWorkOut: WorkOutClass = { ...workOut, exersices: { ...updatedWorkOutExercises } };
-    this.store.dispatch(WorkoutsActions.updateWorkOut({ update: { id: workOut.id, changes: { ...updatedWorkOut } } }));
+    const updatedWorkoutExercises = { ...Workout.exersices };
+    delete updatedWorkoutExercises[id];
+    const updatedWorkout: WorkoutClass = { ...Workout, exersices: { ...updatedWorkoutExercises } };
+    this.store.dispatch(WorkoutsActions.updateWorkout({ update: { id: Workout.id, changes: { ...updatedWorkout } } }));
 
 
   }
@@ -186,7 +207,7 @@ export class WorkoutsComponent implements OnInit {
     e.stopPropagation();
     e.preventDefault();
 
-    this.store.dispatch(WorkoutsActions.deleteWorkOut({ id: id }))
+    this.store.dispatch(WorkoutsActions.deleteWorkout({ id: id }))
   }
 
   getValue(data) {
@@ -200,25 +221,27 @@ export class WorkoutsComponent implements OnInit {
       this.disabled = true;
     }
   }
-  openDialog(type: string, workOut) {
-    this.type = `New ${type}`;
+  openDialog(type: string, Workout) {
+    
+    this.type = type=="workout" ?`New workout`: 'Add exercise';
     let dialogRef = this.dialog.open(this.callAPIDialog);
     dialogRef.afterClosed().subscribe(result => {
 
-     
+
       if (result !== undefined) {
         this.disabled = true;
         if (result === 'yes' && type == "workout") {
-          const newWorkOut = new WorkOutClass(uuid(), this.data);
-          this.store.dispatch(WorkoutsActions.addWorkOut({ WorkOut: newWorkOut }))
+          console.log(this.data)
+          const newWorkout = new WorkoutClass(uuid(), this.capitalizeFirstLetter(this.data));
+          this.store.dispatch(WorkoutsActions.addWorkout({ Workout: newWorkout }))
 
 
         } else if (result === 'yes' && type == "exercise") {
           let newExercise = new ExersiceClass(uuid(), this.data)
-          let updatedExercises = { ...workOut.exersices, [newExercise.id]: newExercise };
+          let updatedExercises = { ...Workout.exersices, [newExercise.id]: newExercise };
 
-          const updatedWorkOut: WorkOutClass = { ...workOut, exersices: { ...updatedExercises } }
-          this.store.dispatch(WorkoutsActions.updateWorkOut({ update: { id: workOut.id, changes: { ...updatedWorkOut } } }));
+          const updatedWorkout: WorkoutClass = { ...Workout, exersices: { ...updatedExercises } }
+          this.store.dispatch(WorkoutsActions.updateWorkout({ update: { id: Workout.id, changes: { ...updatedWorkout } } }));
 
 
         }
